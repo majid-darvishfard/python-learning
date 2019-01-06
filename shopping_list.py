@@ -1,4 +1,3 @@
-## Majid DarvishFard
 #For Print LOGO 
 print()
 print('=' * 38)
