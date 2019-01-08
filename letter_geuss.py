@@ -2,7 +2,7 @@
 from random import randrange,randint
 import os
 
-words=('banana','student','teacher','python','orange','Lemon')
+words=('banana','student','teacher','python','orange','lemon')
 
 
 
@@ -15,19 +15,21 @@ input_list = []
 guess_word = '-'*len(selected_word)
 
  
-def again():
-    global selected_word
-    global current_life
-    global input_list
-    global guess_word
+def select_new_word():
     random_index=randint(0,len(words)-1)
     selected_word=words[random_index]
+    return selected_word
+
+def reset_couner():
     current_life=0
     input_list = []
-    guess_word = '-'*len(selected_word)
+    return current_life,input_list
+
+def clear():
+    os.system('cls') if os.name=='nt' else os.system('clear') 
 
 while True:
-    os.system('cls') if os.name=='nt' else os.system('clear') 
+    clear()
     print('Strikes:  {}/{}'.format(current_life, max_life))
     print()
     print()
@@ -49,7 +51,10 @@ while True:
             print('***************************')
             playagain=input('Do you want play again? [Y/N] ').lower()
             if playagain == 'y':
-                again()
+                selected_word=select_new_word()
+                guess_word = '-'*len(selected_word)
+                current_life,input_list = reset_couner()
+
             else:
                 break
     else:
@@ -63,15 +68,9 @@ while True:
         print('***************************')
         playagain=input('Do you want play again? [Y/N] ').lower()
         if playagain == 'y':
-            again()
+            selected_word=select_new_word()
+            guess_word = '-'*len(selected_word)
+            current_life,input_list = reset_couner()
         else:
             break        
-
- 
-
-
-
-
-
-
 
