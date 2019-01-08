@@ -1,16 +1,13 @@
 import os
 from random import seed,randint
 
-gold_value=randint(1,101)
-max_input_count=6
+gold_value=randint(1,100)
+max_input_count=7
 count=1
 
-def again():
+def clear():
     os.system('cls') if os.name=='nt' else os.system('clear')
-    global gold_value
-    global count
-    gold_value=randint(1,101)
-    count=1
+
 
 while True:
     print("")
@@ -22,16 +19,18 @@ while True:
     else:
         input_value=int(input_value)    
     print()
-    count +=1
-    if count > max_input_count:
+    
+    if count >= max_input_count:
         print("You Lose !! My number was {}".format(gold_value))
         playagain=input('Do you want play again? [y/n]').lower()
         if playagain == 'y':
-            again()
+            clear()
+            gold_value=randint(1,100)
+            count=1
             continue
         else:
             break
-
+    count +=1
     if input_value > gold_value:
         print("---> My number is lower than {} ".format(input_value))
     elif input_value < gold_value:
@@ -42,6 +41,8 @@ while True:
         print("----------------------")
         playagain=input('Do you want play again? [y/n]').lower()
         if playagain == 'y' :
-            again()
+            clear()
+            gold_value=randint(1,101)
+            count=1
         else:
             break
