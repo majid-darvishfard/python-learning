@@ -44,23 +44,24 @@ def check_inputvalue(value):
 		return 0
 
 
+def check_count(input_count,input_type):
+	'''check user input for row and column count.
+	'''
+	counts = check_inputvalue(input_count)
+	while counts == 0:
+		print("---> Pleae input a Valid input number (input>0)")
+		again_counts_input = input("input count of {}s: ".format(input_type))
+		counts = check_inputvalue(again_counts_input)
+	return counts
+
 
 # get row count and check is valid
-row_count = input("input count of rows: ")
-row_count = check_inputvalue(row_count)
-while row_count == 0:
-	print("---> Pleae input a Valid input number (input>0)")
-	row_count = input("input count of rows: ")
-	row_count = check_inputvalue(row_count)
+row_input = input("input count of rows: ")
+row_count = check_count(row_input,'row')
 
 # get column count and check is valid
-column_count = input("input count of column: ")
-column_count = check_inputvalue(column_count)
-while column_count == 0:
-	print("---> Pleae input a Valid input number (input>0)")
-	column_count = input("input count of column: ")
-	column_count = check_inputvalue(column_count)
-
+column_input = input("input count of column: ")
+column_count = check_count(column_input,'column')
 
 def check_value(x, y):
 	''' generate  D(Door) and Z(Dragon) index and check Not Duplicate with X. 
