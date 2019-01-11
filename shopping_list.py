@@ -1,4 +1,5 @@
 import os
+import json
 
 categorys=['cloth','citrus','supermarket','book','food']
 
@@ -81,13 +82,14 @@ def show_value(show_all=False):
             for name,count in value.items():
                 print('category "{}" --> item:"{}" , count:"{}"'.format(category,name,count ))
 
-def show_availabe_item():
+def show_availabe_item(my_dic):
     ''' create list of all items
         return:
             items list
     '''
+
     item_list=[]
-    for category,value in items_dic.items():
+    for category,value in my_dic.items():
         for name,count in value.items():
             item_list.append(name)
     return item_list        
@@ -134,7 +136,7 @@ def update():
     '''get item for update and check that 
     '''
     print('input item name for edit: ')
-    print('available items is : {}'.format(' ,'.join(show_availabe_item())))
+    print('available items is : {}'.format(' ,'.join(show_availabe_item(items_dic))))
     input_update=input('update>>')
     item_found=check_item_exist(input_update)
     if item_found != None:
@@ -189,7 +191,7 @@ def remove():
     '''get item name from user and check item found 
     '''
     print('input item name for remove: ')
-    print('available items is : {}'.format(' ,'.join(show_availabe_item())))
+    print('available items is : {}'.format(' ,'.join(show_availabe_item(items_dic))))
     input_remove=input('remove>>').lower()
     item_found=check_item_exist(input_remove)
     if item_found != None:
@@ -251,11 +253,52 @@ def save(item_name,item_count,item_category):
             if value == item_name:
                 value_count_dic[value] += int(count)
         items_dic[item_category].update(value_count_dic)
+    write_file(file_path)
     return items_dic
 
+def get_username():
+    print('Please input yuor NAME: ')
+    username=input('username>> ')
+    return username
+
+def write_file(file_path):
+    '''write Current state of user items in file
+    '''
+    json_f = json.dumps(items_dic)
+    f=open(file_path,'a')    
+    f.write(json_f+ os.linesep)
+    f.close()
+
+def get_favorite():
+    '''read file and return items 
+    '''
+    favorite=set()
+    if os.path.exists(file_path):
+        with open(file_path, "r") as read_file:
+            for line in read_file:
+                j_line=json.loads(line.strip())
+                favorite_items=show_availabe_item(j_line)
+                favorite.update(favorite_items)
+    return favorite
+
+
+#create directory for save  user file 
+directory_name='user_shopping'
+if not os.path.exists(directory_name):
+    os.mkdir(directory_name)
+directory_path=os.getcwd()+'/'+directory_name
 
 clear()
 print()
+username=get_username()
+file_path=directory_path+'/'+username
+print('                      Welcome {}'.format(username))
+print('--'*30)
+favorit=get_favorite()
+if favorit :
+    print('Your Favorit Items is {} '.format(', '.join(favorit)))
+    print('--'*30)
+
 print ("What Should We Use at the Store ? ")
 print()
 show_help()
