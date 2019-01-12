@@ -1,23 +1,23 @@
 
-from random import randrange,randint
+from random import randrange,randint,choice
 import os
 
-words=('banana','student','teacher','python','orange','lemon')
+words={'banana':'is an fruit',
+        'perspolis':'iranian Footbal team',
+        'python':'is programming Language',
+        'purple':"it's color",
+        'Pakistan':' is a country in South Asia',
+        'tiger':' is the largest cat species',
+        'amazon':' is a multinational technology company focusing in e-commerce'}
 
-
-
-random_index=randint(0,len(words)-1)
-selected_word=words[random_index]
-
+selected_word=choice(list(words))
 current_life=0
 max_life=5
 input_list = []
 guess_word = '-'*len(selected_word)
-
  
 def select_new_word():
-    random_index=randint(0,len(words)-1)
-    selected_word=words[random_index]
+    selected_word=choice(list(words))
     return selected_word
 
 def reset_couner():
@@ -32,6 +32,7 @@ while True:
     clear()
     print('Strikes:  {}/{}'.format(current_life, max_life))
     print()
+    print('Word Description: {}'.format(words[selected_word]))
     print()
     print(' '.join(input_list))
     print()
